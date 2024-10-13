@@ -49,11 +49,11 @@
             $valuesKeys = $bindingKeys;
 
             // Prepare the SQL statement
-            $query = "SELECT * FROM " . $this->tableName . " WHERE ";
+            $query = "SELECT * FROM " . $this->tableName;
 
             foreach ($operators as $index=>$operator)
             {
-                if ($index != 0) $query .= " AND ";
+                $query .= ($index != 0)? " AND " : " WHERE ";
                 $query .= ($columns[$index] . " " . $operator . " " . $valuesKeys[$index]);
             }
             $stmt = self::Sanitize($parameters, $query);
