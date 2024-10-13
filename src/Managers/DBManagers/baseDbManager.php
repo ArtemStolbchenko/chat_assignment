@@ -2,13 +2,14 @@
     class BaseDbManager {
         public static $DB;
         private static $IsInitialized = false;
+        private static $DatabaseName = "chat.db";
         
         public $tableName;
 
-        public function Initialize()
+        public static function Initialize()
         {//Initializes the database connection. It is vital to call it at the startup
             if (!self::$IsInitialized) {
-                self::$DB = new SQLite3('chat.db');
+                self::$DB = new SQLite3(self::$DatabaseName);
                 self::$IsInitialized = true;
             }
         }
@@ -23,17 +24,13 @@
 
             // Get the column names and the corresponding values keys
             $columns = implode(", ", array_keys($parameters));
-            $values = implode(", ", $bindingKeys);
-
+            $valuesKeys = implode(", ", $bindingKeys);
             // Prepare the SQL statement
-            $query = "INSERT INTO " . $this->tableName . " (" . $columns . ") VALUES (" . $values . ")";
-            
-            var_dump($query);
+            $query = "INSERT INTO " . $this->tableName . " (" . $columns . ") VALUES (" . $valuesKeys . ")";
 
             $stmt = self::Sanitize($parameters, $query);
             // Execute the query
             $result = $stmt->execute();
-            var_dump($result);
 
             // Check if the query execution was successful
             if (!$result) {
@@ -42,6 +39,45 @@
 
             return true;
         }
+
+        public function Get($parameters, $operators)
+        {
+            $bindingKeys = self::GetBindingKeys(array_keys($parameters));
+
+            // Break up parameters into columns and values keys
+            $columns = array_keys($parameters);
+            $valuesKeys = $bindingKeys;
+
+            // Prepare the SQL statement
+            $query = "SELECT * FROM " . $this->tableName . " WHERE ";
+
+            foreach ($operators as $index=>$operator)
+            {
+                if ($index != 0) $query .= " AND ";
+                $query .= ($columns[$index] . " " . $operator . " " . $valuesKeys[$index]);
+            }
+            $stmt = self::Sanitize($parameters, $query);
+            // Execute the query
+            $result = $stmt->execute();
+
+            // Check if the query execution was successful
+            if (!$result) {
+                throw new Exception('Error executing query: ' . self::$DB->lastErrorMsg());
+            }
+            $output = [];
+            while ($row = $result->fetchArray())
+            {
+                $output[] = $row;
+            }
+            return $output;
+        }
+
+        protected function BreakupParameters($parameters)
+        {
+
+            return [$columns, $valuesKeys];
+        }
+
         protected function Sanitize($parameters, $query)
         {//returns the prepared statement for the given query
             $bindingKeys = self::GetBindingKeys(array_keys($parameters));

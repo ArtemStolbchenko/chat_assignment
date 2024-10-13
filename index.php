@@ -1,8 +1,12 @@
 <?php
 
-require './vendor/autoload.php';
-require './src/configuration/dbconfig.php';
-require './src/Managers/LogicManagers/userManager.php';
+require_once './vendor/autoload.php';
+require_once './src/configuration/dbconfig.php';
+require_once './src/Managers/LogicManagers/userManager.php';
+require_once './src/Managers/DBManagers/baseDbManager.php';
+
+BaseDbManager::Initialize();
+session_start();
 
 $config = ['settings' => ['displayErrorDetails' => true]]; 
 $app = new Slim\App($config);
@@ -13,16 +17,15 @@ $app->get('/', function () {
 });
 $app->get('/groups', function()
 {
-	require './src/pages/groups.php';
+	require_once './src/pages/groups.php';
+	$usersManager = new UserManager();
 });
 $app->get('/chat', function ($groupId)
 {
-	require './src/pages/chat.php';
-	require './src/Managers/DBManagers/baseDbManager.php';
+	require_once './src/pages/chat.php';
 
 	$manager = new BaseDbManager();
 	$manager->tableName = 'Messages';
-	$manager->Initialize();
 
 	$parameters = array(
 		'authorId' => '12',
