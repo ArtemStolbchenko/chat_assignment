@@ -12,21 +12,21 @@
 
         function GetMessages($groupId, $userToken)
         {
-            $isEnrolled = $enrolmentDbManager.IsEnrolled($groupId, $userToken);
+            $isEnrolled = $this->enrolmentDbManager->IsEnrolled($groupId, $userToken);
 
             if (!$isEnrolled)
                 return "You are unauthorized to browse messages in this group!";
 
-            return $messageDbManager->GetMessages($groupId);
+            return $this->messageDbManager->GetMessages($groupId);
         }
         function PublishMessage($userToken, $groupId, $content)
         {
-            $isEnrolled = $enrolmentDbManager.IsEnrolled($groupId, $userToken);
+            $isEnrolled = $this->enrolmentDbManager->IsEnrolled($groupId, $userToken);
 
             if (!$isEnrolled)
                 return "You are unauthorized to send messages in this group!";
 
-            return $messageDbManager->PublishMessage($userToken, $groupId, $content);
+            return $this->messageDbManager->PublishMessage($userToken, $groupId, $content);
         }
     }
 ?>
