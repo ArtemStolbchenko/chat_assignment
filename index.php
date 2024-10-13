@@ -58,8 +58,9 @@ $app->get('/Messages/Send/{groupId}/{content}', function ($request, $response, $
 
 	$groupId = $args['groupId'];
 	$content = $args['content'];
+	$userToken = $_SESSION[$usersManager->userSessionTag];
 
-	
+	echo json_encode($messageManager->PublishMessage($userToken, $groupId, $content));
 });
 $app->get('/Messages/{groupId}', function ($request, $response, $args)
 {
@@ -67,8 +68,9 @@ $app->get('/Messages/{groupId}', function ($request, $response, $args)
 	$messageManager = new MessageManager();
 
 	$groupId = $args['groupId'];
+	$userToken = $_SESSION[$usersManager->userSessionTag];
 
-
+	echo json_encode($messageManager->GetMessages($groupId, $userToken));
 });
 $app->run();
 ?>
