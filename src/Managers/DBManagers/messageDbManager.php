@@ -20,7 +20,7 @@
             $timestamp = date(DATE_RFC3339); //the same format as in the SQLite
             
             $parameters = array(
-                "authorId" => $userToken,
+                "authorToken" => $userToken,
                 "groupId" => $groupId,
                 "content" => $content,
                 "dateSent" => $timestamp

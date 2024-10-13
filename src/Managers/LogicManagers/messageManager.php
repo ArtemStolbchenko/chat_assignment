@@ -17,7 +17,7 @@
             if (!$isEnrolled)
                 return "You are unauthorized to browse messages in this group!";
 
-            return $this->messageDbManager->GetMessages($groupId);
+            return $this->messageDbManager->GetMessagesPerGroup($groupId);
         }
         function PublishMessage($userToken, $groupId, $content)
         {
@@ -26,7 +26,7 @@
             if (!$isEnrolled)
                 return "You are unauthorized to send messages in this group!";
 
-            return $this->messageDbManager->PublishMessage($userToken, $groupId, $content);
+            return $this->messageDbManager->AddMessage($userToken, $groupId, $content);
         }
     }
 ?>
