@@ -1,6 +1,6 @@
 <?php
-    include './src/Managers/DBManagers/MessageDbManager.php';
-    include './src/Managers/DBManagers/groupEnrolmentDbManager.php';
+    require_once './src/Managers/DBManagers/MessageDbManager.php';
+    require_once './src/Managers/DBManagers/groupEnrolmentDbManager.php';
 
     class MessageManager {
         private $messageDbManager, $enrolmentDbManager;

@@ -1,5 +1,5 @@
 <?php
-    include './src/Managers/DBManagers/userDbManager.php';
+    require_once './src/Managers/DBManagers/userDbManager.php';
 
     class UserManager {
         public $userSessionTag = "User";

@@ -1,6 +1,6 @@
 <?php
-    include './src/Managers/DBManagers/groupDbManager.php';
-    include './src/Managers/DBManagers/groupEnrolmentDbManager.php';
+    require_once './src/Managers/DBManagers/groupDbManager.php';
+    require_once './src/Managers/DBManagers/groupEnrolmentDbManager.php';
 
     class GroupManager {
         private $groupDbManager, $enrolmentsDbManager;
