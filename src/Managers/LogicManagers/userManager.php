@@ -1,12 +1,12 @@
 <?php
-    include './src/Managers/DBManagers/userDbManager.php';
+    require_once './src/Managers/DBManagers/userDbManager.php';
 
     class UserManager {
-        private $userSessionTag = "User";
+        public $userSessionTag = "User";
         private $dbManager;
         function __construct()
         {
-            $this->dbManager = new UserDBManager();
+            $this->dbManager = new UserDbManager();
             $this->LoadCurrentUser();
         }
 
