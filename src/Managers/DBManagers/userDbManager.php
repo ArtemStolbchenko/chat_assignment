@@ -1,6 +1,6 @@
 <?php
     require_once './src/Managers/DBManagers/BaseDbManager.php';
-    class UserDBManager extends BaseDbManager {
+    class UserDbManager extends BaseDbManager {
         public function __construct()
         {
             $this->tableName = "Users";
@@ -22,7 +22,7 @@
             );
 
             $result = $this->Add($parameters);
-            return (isset($result));
+            return $result;
         }
     }
 ?>
